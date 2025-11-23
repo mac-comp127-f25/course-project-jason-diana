@@ -1,4 +1,4 @@
-public class Grid {
+public class Cell {
     public boolean isMine;
     public boolean isRevealed;
     public boolean isFlaged;
