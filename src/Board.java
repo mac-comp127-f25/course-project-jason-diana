@@ -50,4 +50,16 @@ public class Board {
         }
         return num;
     }
+
+    public int getRow() {
+        return row;
+    }
+
+    public int getCol() {
+        return col;
+    }
+
+    public Cell getCell(int r, int c) {
+        return grid[r][c];
+    }
 }
