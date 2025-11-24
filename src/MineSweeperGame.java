@@ -1,10 +1,18 @@
 import edu.macalester.graphics.*;
 import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 
 public class MineSweeperGame {
     private static final int CANVAS_WIDTH = 500;
     private static final int CANVAS_HEIGHT = 500;
+    private static final int OX = 100;
+    private static final int OY = 100;
+    private static final int IMAGE_SIZE = new Image("0.png").getImageWidth();
 
 
     private CanvasWindow canvas;
@@ -17,6 +25,7 @@ public class MineSweeperGame {
         drawBoard();
 
         addMineCounterLabel();
+
     }
 
     public static void main(String[] args) {
@@ -31,13 +40,12 @@ public class MineSweeperGame {
     }
 
     private void drawBoard() {
-        double ox = 100;
-        double oy = 100;
+
         Image imgii = new Image("0.png");
         for (int i = 0; i < board.getRow(); i++) {
             for (int j = 0; j < board.getCol(); j++) {
-                double x = ox+ i*imgii.getHeight();
-                double y = oy + j*imgii.getWidth();
+                double x = OX + i*imgii.getHeight();
+                double y = OY + j*imgii.getWidth();
 
                 Cell cell = board.getCell(i, j);
 
@@ -91,5 +99,22 @@ public class MineSweeperGame {
             }
         }
     }
+
+    private void jLabellMouseClicked(MouseEvent evt){
+        if(evt.getButton() == MouseEvent.BUTTON1) {
+            int x = evt.getX();
+            int y = evt.getY();
+        }
+        else if (evt.getButton() == MouseEvent.BUTTON2) {
+
+        }
+    }
+
+    private void tracingClickLocation(int x, int y) {
+        if (x < OX && x > OX + IMAGE_SIZE * board.getRow())
+    }
+ 
+    
+   
 }
 
