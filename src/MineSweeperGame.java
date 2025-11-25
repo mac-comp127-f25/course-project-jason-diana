@@ -1,10 +1,6 @@
 import edu.macalester.graphics.*;
 import java.awt.Color;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 
 
 public class MineSweeperGame {
@@ -100,20 +96,30 @@ public class MineSweeperGame {
         }
     }
 
-    private void jLabellMouseClicked(MouseEvent evt){
-        if(evt.getButton() == MouseEvent.BUTTON1) {
-            int x = evt.getX();
-            int y = evt.getY();
-        }
-        else if (evt.getButton() == MouseEvent.BUTTON2) {
+    private void addMouseHandler() {
+        canvas.onMouseDown(event -> {
+            double x = event.getPosition().getX();
+            double y = event.getPosition().getY();
 
-        }
-    }
+            // convert pixels to grid coordinates
+            int col = (int)((x) / IMAGE_SIZE);
+            int row = (int)(y/ IMAGE_SIZE);
 
-    private void tracingClickLocation(int x, int y) {
-        if (x < OX && x > OX + IMAGE_SIZE * board.getRow())
+            if (!board.inBounds(row, col)) return;
+
+            // LEFT CLICK → reveal
+            if (event.getButton() == MouseButton.LEFT) {
+                board.revealCell(row, col);
+            }
+
+            // RIGHT CLICK → toggle flag
+            else if (event.getButton() == MouseButton.RIGHT) {
+                board.toggleFlag(row, col);
+            }
+
+            drawBoard();  // refresh screen after any action
+        });
     }
- 
     
    
 }
