@@ -1,5 +1,4 @@
 import edu.macalester.graphics.*;
-import java.awt.Color;
 
 
 
@@ -111,8 +110,8 @@ public class MineSweeperGame {
             double y = event.getPosition().getY();
 
             // convert pixels to grid coordinates
-            int col = (int)((x) / IMAGE_SIZE);
-            int row = (int)(y/ IMAGE_SIZE);
+            int col = (int)((x - OX) / IMAGE_SIZE);
+            int row = (int)((y-OY)/ IMAGE_SIZE);
 
             if (!board.inBounds(row, col)) return;
 
@@ -130,15 +129,6 @@ public class MineSweeperGame {
             drawBoard();  // refresh screen after any action
         });
     }
-
-    // private void addKeyHandler() {
-    //     canvas.onKeyDown(event -> {
-    //         if (event.getKey().toString().equals("option")) {
-    //             addMouseHandler();
-                
-    //         }
-    //     });
-    // }   
     
    
 }
