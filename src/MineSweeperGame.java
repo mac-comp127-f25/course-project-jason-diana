@@ -3,6 +3,7 @@ import java.awt.Color;
 
 
 
+
 public class MineSweeperGame {
     private static final int CANVAS_WIDTH = 500;
     private static final int CANVAS_HEIGHT = 500;
@@ -11,8 +12,8 @@ public class MineSweeperGame {
     private static final int IMAGE_SIZE = new Image("0.png").getImageWidth();
 
 
-    private CanvasWindow canvas;
-    private Board board = new Board(10,10, 15);
+    private static CanvasWindow canvas;
+    private static Board board = new Board(10,10, 15);
 
     public MineSweeperGame() {
         canvas = new CanvasWindow("Mine Sweeper", CANVAS_WIDTH, CANVAS_HEIGHT);
@@ -26,6 +27,7 @@ public class MineSweeperGame {
 
     public static void main(String[] args) {
         new MineSweeperGame();
+        addMouseHandler();
     }
 
     private void addMineCounterLabel() {
@@ -35,7 +37,14 @@ public class MineSweeperGame {
         canvas.add(label);
     }
 
-    private void drawBoard() {
+    private static void toggleFlag(int row, int col) {
+        Cell cell = board.getCell(row, col);
+        cell.isFlaged = !cell.isFlaged;
+        Image flag = new Image(OX + row * IMAGE_SIZE, OY + col * IMAGE_SIZE, "flag.png");
+        canvas.add(flag);
+    }
+
+    private static void drawBoard() {
 
         Image imgii = new Image("0.png");
         for (int i = 0; i < board.getRow(); i++) {
@@ -96,7 +105,7 @@ public class MineSweeperGame {
         }
     }
 
-    private void addMouseHandler() {
+    private static void addMouseHandler() {
         canvas.onMouseDown(event -> {
             double x = event.getPosition().getX();
             double y = event.getPosition().getY();
@@ -107,19 +116,29 @@ public class MineSweeperGame {
 
             if (!board.inBounds(row, col)) return;
 
-            // LEFT CLICK → reveal
-            if (event.getButton() == MouseButton.LEFT) {
-                board.revealCell(row, col);
+            canvas.onKeyDown(event2 -> {
+            if (event2.getKey().toString().equals("option")) {
+                addMouseHandler();
+                toggleFlag(row, col);
+                drawBoard();  // refresh screen after any action
+                return;
             }
+        });
 
-            // RIGHT CLICK → toggle flag
-            else if (event.getButton() == MouseButton.RIGHT) {
-                board.toggleFlag(row, col);
-            }
+            board.revealCell(row, col);
 
             drawBoard();  // refresh screen after any action
         });
     }
+
+    // private void addKeyHandler() {
+    //     canvas.onKeyDown(event -> {
+    //         if (event.getKey().toString().equals("option")) {
+    //             addMouseHandler();
+                
+    //         }
+    //     });
+    // }   
     
    
 }
