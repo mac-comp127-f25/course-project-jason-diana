@@ -93,6 +93,18 @@ public class Board {
         }
     }
 
+    public boolean isGameOver() {
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                Cell cell = grid[i][j];
+                if (cell.isMine && cell.isRevealed) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 
     public int getRow() {
         return row;

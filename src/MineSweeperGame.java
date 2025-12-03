@@ -27,6 +27,13 @@ public class MineSweeperGame {
     public static void main(String[] args) {
         new MineSweeperGame();
         addMouseHandler();
+        if (board.isGameOver()) {
+            GraphicsText gameOverText = new GraphicsText("Game Over!");
+            gameOverText.setPosition(CANVAS_WIDTH / 2 - 50, CANVAS_HEIGHT / 2);
+            gameOverText.setFontSize(30);
+            canvas.add(gameOverText);
+            canvas.closeWindow();
+        }
     }
 
     private void addMineCounterLabel() {
@@ -110,13 +117,13 @@ public class MineSweeperGame {
             double y = event.getPosition().getY();
 
             // convert pixels to grid coordinates
-            int col = (int)((x - OX) / IMAGE_SIZE);
-            int row = (int)((y-OY)/ IMAGE_SIZE);
+            int row = (int)((x - OX) / IMAGE_SIZE);
+            int col = (int)((y-OY)/ IMAGE_SIZE);
 
             if (!board.inBounds(row, col)) return;
 
             canvas.onKeyDown(event2 -> {
-            if (event2.getKey().toString().equals("option")) {
+            if (event2.getKey().toString().equals("shift")) {
                 addMouseHandler();
                 toggleFlag(row, col);
                 drawBoard();  // refresh screen after any action
