@@ -1,4 +1,5 @@
 import edu.macalester.graphics.*;
+import edu.macalester.graphics.events.KeyboardEvent;
 
 
 
@@ -112,6 +113,7 @@ public class MineSweeperGame {
     }
 
     private static void addMouseHandler() {
+
         canvas.onMouseDown(event -> {
             double x = event.getPosition().getX();
             double y = event.getPosition().getY();
@@ -122,21 +124,17 @@ public class MineSweeperGame {
 
             if (!board.inBounds(row, col)) return;
 
-            canvas.onKeyDown(event2 -> {
-            if (event2.getKey().toString().equals("shift")) {
-                addMouseHandler();
-                toggleFlag(row, col);
-                drawBoard();  // refresh screen after any action
-                return;
-            }
-        });
 
             board.revealCell(row, col);
 
             drawBoard();  // refresh screen after any action
         });
     }
-    
+
+
+    private boolean isKeyPressed(KeyboardEvent event, String key) {
+        return event.getKey().toString().equals(key);
+    }
    
 }
 
