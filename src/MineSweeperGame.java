@@ -30,13 +30,6 @@ public class MineSweeperGame {
         new MineSweeperGame();
         addMouseHandler();
         addKeyHandler();
-        if (board.isGameOver()) {
-            GraphicsText gameOverText = new GraphicsText("Game Over!");
-            gameOverText.setPosition(CANVAS_WIDTH / 2 - 50, CANVAS_HEIGHT / 2);
-            gameOverText.setFontSize(30);
-            canvas.add(gameOverText);
-            canvas.closeWindow();
-        }
     }
 
     private void addMineCounterLabel() {
@@ -49,24 +42,22 @@ public class MineSweeperGame {
     private static void toggleFlag(int row, int col) {
         Cell cell = board.getCell(row, col);
         cell.isFlaged = !cell.isFlaged;
-        Image flag = new Image(OX + row * IMAGE_SIZE, OY + col * IMAGE_SIZE, "flag.png");
-        canvas.add(flag);
     }
 
     private static void drawBoard() {
+        canvas.removeAll();
 
         Image imgii = new Image("0.png");
+
         for (int i = 0; i < board.getRow(); i++) {
             for (int j = 0; j < board.getCol(); j++) {
+
                 double x = OX + i*imgii.getHeight();
                 double y = OY + j*imgii.getWidth();
 
                 Cell cell = board.getCell(i, j);
 
-                if (cell.isFlaged) {
-                    continue;
-                }
-                else if (cell.isRevealed) {
+                if (cell.isRevealed) {
                     if (!cell.isMine) {
                         if (cell.getMineNum() == 0) {
                         Image img = new Image(x, y, "0.png");
@@ -110,8 +101,21 @@ public class MineSweeperGame {
                         canvas.add(img); 
                     }
                 } else {
-                    Image img = new Image(x, y, "10.png");
-                    canvas.add(img); 
+                    if (cell.isFlaged) {
+                        Image img = new Image(x, y, "flag.png");
+                        canvas.add(img); 
+                    }
+                    else {
+                        Image img = new Image(x, y, "10.png");
+                        canvas.add(img); 
+                    }
+                    if (board.isGameOver()) {
+                        GraphicsText gameOverText = new GraphicsText("Game Over!");
+                        gameOverText.setPosition(CANVAS_WIDTH / 2.0 - 50, CANVAS_HEIGHT / 2.0);
+                        gameOverText.setFontSize(30);
+                        canvas.add(gameOverText);
+                    }
+                    
                 }
             }
         }
@@ -130,12 +134,17 @@ public class MineSweeperGame {
             if (!board.inBounds(row, col)) return;
             if (FLAG_MODE) {
                 toggleFlag(row, col);
-                return;
             }
             else {
                 board.revealCell(row, col);
             }
             drawBoard();  // refresh screen after any action
+            if (board.isGameOver()) {
+                GraphicsText gameOverText = new GraphicsText("Game Over!");
+                gameOverText.setPosition(CANVAS_WIDTH / 2.0 - 50, CANVAS_HEIGHT / 2.0);
+                gameOverText.setFontSize(30);
+                canvas.add(gameOverText);
+            }
         });
     }
 
@@ -144,18 +153,18 @@ public class MineSweeperGame {
             Key key = event.getKey();
             if (key == Key.F) {
                 FLAG_MODE = true;
+                System.out.println("Flag mode activated");
             }
         });
         canvas.onKeyUp(event -> {
             Key key = event.getKey();
             if (key == Key.F) {
                 FLAG_MODE = false;
+                System.out.println("Flag mode deactivated");
             }
         });
     return FLAG_MODE;
     }
-
-
 
    
 }
