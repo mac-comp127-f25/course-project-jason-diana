@@ -63,7 +63,10 @@ public class MineSweeperGame {
 
                 Cell cell = board.getCell(i, j);
 
-                if (cell.isRevealed) {
+                if (cell.isFlaged) {
+                    continue;
+                }
+                else if (cell.isRevealed) {
                     if (!cell.isMine) {
                         if (cell.getMineNum() == 0) {
                         Image img = new Image(x, y, "0.png");

@@ -99,7 +99,6 @@ public class Board {
                 Cell cell = grid[i][j];
                 if (cell.isMine && cell.isRevealed) {
                     return true;
-                    
                 }
             }
         }
