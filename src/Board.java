@@ -105,6 +105,17 @@ public class Board {
         return false;
     }
 
+    public void revealAllMines() {
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                Cell cell = grid[i][j];
+                if (cell.isMine) {
+                    cell.isRevealed = true;
+                }
+            }
+        }
+    }
+
 
     public int getRow() {
         return row;

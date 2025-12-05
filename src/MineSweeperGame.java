@@ -111,6 +111,7 @@ public class MineSweeperGame {
                     }
                     if (board.isGameOver()) {
                         GraphicsText gameOverText = new GraphicsText("Game Over!");
+                        board.revealAllMines();
                         gameOverText.setPosition(CANVAS_WIDTH / 2.0 - 50, CANVAS_HEIGHT / 2.0);
                         gameOverText.setFontSize(30);
                         canvas.add(gameOverText);
@@ -138,13 +139,7 @@ public class MineSweeperGame {
             else {
                 board.revealCell(row, col);
             }
-            drawBoard();  // refresh screen after any action
-            if (board.isGameOver()) {
-                GraphicsText gameOverText = new GraphicsText("Game Over!");
-                gameOverText.setPosition(CANVAS_WIDTH / 2.0 - 50, CANVAS_HEIGHT / 2.0);
-                gameOverText.setFontSize(30);
-                canvas.add(gameOverText);
-            }
+            drawBoard();  
         });
     }
 
