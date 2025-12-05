@@ -1,4 +1,5 @@
 import edu.macalester.graphics.*;
+import edu.macalester.graphics.events.Key;
 import edu.macalester.graphics.events.KeyboardEvent;
 
 
@@ -10,6 +11,7 @@ public class MineSweeperGame {
     private static final int OX = 100;
     private static final int OY = 100;
     private static final int IMAGE_SIZE = new Image("0.png").getImageWidth();
+    private static boolean FLAG_MODE = false;
 
 
     private static CanvasWindow canvas;
@@ -28,6 +30,7 @@ public class MineSweeperGame {
     public static void main(String[] args) {
         new MineSweeperGame();
         addMouseHandler();
+        addKeyHandler();
         if (board.isGameOver()) {
             GraphicsText gameOverText = new GraphicsText("Game Over!");
             gameOverText.setPosition(CANVAS_WIDTH / 2 - 50, CANVAS_HEIGHT / 2);
@@ -123,18 +126,30 @@ public class MineSweeperGame {
             int col = (int)((y-OY)/ IMAGE_SIZE);
 
             if (!board.inBounds(row, col)) return;
-
-
-            board.revealCell(row, col);
-
+            if (FLAG_MODE) {
+                toggleFlag(row, col);
+                return;
+            }
+            else {
+                board.revealCell(row, col);
+            }
             drawBoard();  // refresh screen after any action
         });
     }
 
-
-    private boolean isKeyPressed(KeyboardEvent event, String key) {
-        return event.getKey().toString().equals(key);
+    private static boolean addKeyHandler() {
+        canvas.onKeyDown(event -> {
+            Key key = event.getKey();
+            if (key == Key.F) {
+                FLAG_MODE = !FLAG_MODE; 
+                System.out.println("Flag mode: " + FLAG_MODE);
+            }
+        });
+    return FLAG_MODE;
     }
+
+
+
    
 }
 
