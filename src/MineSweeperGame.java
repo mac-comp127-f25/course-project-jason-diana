@@ -1,6 +1,5 @@
 import edu.macalester.graphics.*;
 import edu.macalester.graphics.events.Key;
-import edu.macalester.graphics.events.KeyboardEvent;
 
 
 
@@ -141,8 +140,13 @@ public class MineSweeperGame {
         canvas.onKeyDown(event -> {
             Key key = event.getKey();
             if (key == Key.F) {
-                FLAG_MODE = !FLAG_MODE; 
-                System.out.println("Flag mode: " + FLAG_MODE);
+                FLAG_MODE = true;
+            }
+        });
+        canvas.onKeyUp(event -> {
+            Key key = event.getKey();
+            if (key == Key.F) {
+                FLAG_MODE = false;
             }
         });
     return FLAG_MODE;
