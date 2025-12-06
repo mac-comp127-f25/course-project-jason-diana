@@ -117,12 +117,12 @@ public class MineSweeperGame {
 
         Image imgii = new Image("0.png");
 
-        Rectangle backRectangle = new Rectangle (CANVAS_WIDTH / 2.0 - 80, CANVAS_HEIGHT / 2, 290, 40);
+        addReplayKeyHandler();
+        Rectangle backRectangle = new Rectangle (CANVAS_WIDTH / 2.0 - 130, CANVAS_HEIGHT / 2 + 10, 290, 40);
         backRectangle.setFillColor(new Color(25, 25, 25));
         canvas.add(backRectangle);
         GraphicsText replayText = new GraphicsText("Press (R) to Replay");
-        board.revealAllMines();
-        replayText.setPosition(CANVAS_WIDTH / 2.0 - 70, CANVAS_HEIGHT / 2 + 30);
+        replayText.setPosition(CANVAS_WIDTH / 2.0 - 120, CANVAS_HEIGHT / 2 + 40);
         replayText.setFontSize(30);
         replayText.setFillColor(Color.white);
         canvas.add(replayText);
@@ -208,22 +208,22 @@ public class MineSweeperGame {
                         canvas.add(img); 
                     }
                     if (board.isGameOver()) {
-                        Rectangle overlay = new Rectangle (CANVAS_WIDTH / 2.0 - 80, CANVAS_HEIGHT / 2 - 30, 190, 40);
+                        Rectangle overlay = new Rectangle (CANVAS_WIDTH / 2.0 - 130, CANVAS_HEIGHT / 2 - 30, 190, 40);
                         overlay.setFillColor(new Color(25, 25, 25));
                         canvas.add(overlay);
                         GraphicsText gameOverText = new GraphicsText("Game Over!");
                         board.revealAllMines();
-                        gameOverText.setPosition(CANVAS_WIDTH / 2.0 - 70, CANVAS_HEIGHT / 2);
+                        gameOverText.setPosition(CANVAS_WIDTH / 2.0 - 120, CANVAS_HEIGHT / 2);
                         gameOverText.setFontSize(30);
                         gameOverText.setFillColor(Color.RED);
                         canvas.add(gameOverText);
                     }
                     if (board.isGameWon()) {
-                        Rectangle overlay = new Rectangle (CANVAS_WIDTH / 2.0 - 80, CANVAS_HEIGHT / 2 - 30, 170, 40);
+                        Rectangle overlay = new Rectangle (CANVAS_WIDTH / 2.0 - 130, CANVAS_HEIGHT / 2 - 30, 170, 40);
                         overlay.setFillColor(new Color(25, 25, 25));
                         canvas.add(overlay);
                         GraphicsText gameWonText = new GraphicsText("You Win!");
-                        gameWonText.setPosition(CANVAS_WIDTH / 2.0 - 70, CANVAS_HEIGHT / 2);
+                        gameWonText.setPosition(CANVAS_WIDTH / 2.0 - 120, CANVAS_HEIGHT / 2);
                         gameWonText.setFontSize(30);
                         gameWonText.setFillColor(Color.GREEN);
                         canvas.add(gameWonText);
