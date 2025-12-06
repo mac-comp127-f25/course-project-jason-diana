@@ -1,7 +1,6 @@
 import edu.macalester.graphics.*;
 import edu.macalester.graphics.events.Key;
 import java.awt.Color;
-import java.awt.Graphics;
 
 
 public class MineSweeperGame {
