@@ -171,32 +171,26 @@ public class MineSweeperGame {
                         }
                         if (cell.getMineNum() == 1) {
                             Image img = new Image(x, y, "1.png");
-                            img.setScale(1.5);
                             canvas.add(img);
                         }
                         if (cell.getMineNum() == 2) {
                             Image img = new Image(x, y, "2.png");
-                            img.setScale(1.5);
                             canvas.add(img);
                         }
                         if (cell.getMineNum() == 3) {
                             Image img = new Image(x, y, "3.png");
-                            img.setScale(1.5);
                             canvas.add(img);
                         }
                         if (cell.getMineNum() == 4) {
                             Image img = new Image(x, y, "4.png");
-                            img.setScale(1.5);
                             canvas.add(img);
                         }
                         if (cell.getMineNum() == 5) {
                             Image img = new Image(x, y, "5.png");
-                            img.setScale(1.5);
                             canvas.add(img);
                         }
                         if (cell.getMineNum() == 6) {
                             Image img = new Image(x, y, "6.png");
-                            img.setScale(1.5);
                             canvas.add(img);
                         }
                         if (cell.getMineNum() == 7) {
