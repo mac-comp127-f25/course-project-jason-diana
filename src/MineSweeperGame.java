@@ -10,25 +10,25 @@ public class MineSweeperGame {
     private static final int OY = 100;
     private static final int IMAGE_SIZE = new Image("0.png").getImageWidth();
     
-    private static boolean FLAG_MODE = false;
+    private static boolean flagMode = false;
 
 
     private static CanvasWindow canvas;
     private static Board board ;
-    private static boolean gameStarted = false;
-    private static boolean gameOver = false;
     private static int totalMines = 0;
     private static int flagsPlaced = 0;
     private static GraphicsText mineCounterLabel;
 
+    /*
+    * Constructor to set up the game.
+    */
     public MineSweeperGame() {
         canvas = new CanvasWindow("Mine Sweeper", CANVAS_WIDTH, CANVAS_HEIGHT);
         showStartMenu();
         addMenuKeyHandler();
-    }
-
-    public static void main(String[] args) {
-        new MineSweeperGame();
+        addReplayKeyHandler();  
+        addKeyHandler();
+        addMouseHandler();
     }
 
     private static void showStartMenu() {
@@ -55,7 +55,7 @@ public class MineSweeperGame {
         Rectangle easyRect = new Rectangle(startX, startY, rectWidth, rectHeight);
         easyRect.setFillColor(Color.LIGHT_GRAY);
         canvas.add(easyRect);
-        GraphicsText easyText = new GraphicsText("Easy (E)");;   
+        GraphicsText easyText = new GraphicsText("Easy (E)");
         easyText.setPosition(startX + 10, startY + 25);
         canvas.add(easyText);
         easyText.setFontSize(20);
@@ -64,7 +64,7 @@ public class MineSweeperGame {
         Rectangle mediumRect = new Rectangle(startX, startY + rectHeight + gap, rectWidth*1.4, rectHeight);
         mediumRect.setFillColor(Color.LIGHT_GRAY);
         canvas.add(mediumRect); 
-        GraphicsText mediumText = new GraphicsText("Medium (M)");;   
+        GraphicsText mediumText = new GraphicsText("Medium (M)"); 
         mediumText.setPosition(startX + 10, startY + rectHeight + gap + 25);
         canvas.add(mediumText);
         mediumText.setFontSize(20);
@@ -73,7 +73,7 @@ public class MineSweeperGame {
         Rectangle hardRect = new Rectangle(startX, startY + 2 * (rectHeight + gap), rectWidth, rectHeight);
         hardRect.setFillColor(Color.LIGHT_GRAY);
         canvas.add(hardRect);
-        GraphicsText hardText = new GraphicsText("Hard (H)");;   
+        GraphicsText hardText = new GraphicsText("Hard (H)");   
         hardText.setPosition(startX + 10, startY + 2 * (rectHeight + gap) + 25);
         canvas.add(hardText);
         hardText.setFontSize(20);
@@ -83,15 +83,12 @@ public class MineSweeperGame {
         board = new Board(rows, cols, mines);
         board.initialize();
 
-        gameStarted = true;
-        FLAG_MODE = false;  
+        flagMode = false;  
         totalMines = mines;
         flagsPlaced = 0;
 
         canvas.removeAll();
         drawBoard();
-        addMouseHandler();
-        addKeyHandler();
     }
 
 
@@ -100,11 +97,11 @@ public class MineSweeperGame {
         if (cell.isRevealed) {
             return;
         }
-        if (cell.isFlaged) {
-            cell.isFlaged = false;
+        if (cell.isFlagged) {
+            cell.isFlagged = false;
             flagsPlaced--;
         } else {
-            cell.isFlaged = true;
+            cell.isFlagged = true;
             flagsPlaced++;
         }
     }
@@ -118,7 +115,7 @@ public class MineSweeperGame {
         Image imgii = new Image("0.png");
 
         addReplayKeyHandler();
-        Rectangle backRectangle = new Rectangle (CANVAS_WIDTH - 205, 35, 150, 20);
+        Rectangle backRectangle = new Rectangle(CANVAS_WIDTH - 205, 35, 150, 20);
         backRectangle.setFillColor(new Color(25, 25, 150));
         canvas.add(backRectangle);
         GraphicsText replayText = new GraphicsText("Press (R) to Replay");
@@ -127,7 +124,7 @@ public class MineSweeperGame {
         replayText.setFillColor(Color.white);
         canvas.add(replayText);
 
-        Rectangle backRectangle2 = new Rectangle (CANVAS_WIDTH - 205, 65, 120, 20);
+        Rectangle backRectangle2 = new Rectangle(CANVAS_WIDTH - 205, 65, 120, 20);
         backRectangle2.setFillColor(new Color(105, 200, 10));
         canvas.add(backRectangle2);
         GraphicsText flagModeText = new GraphicsText("Hold (F) to Flag");
@@ -136,7 +133,7 @@ public class MineSweeperGame {
         flagModeText.setFillColor(Color.white);
         canvas.add(flagModeText);
 
-        Rectangle backRectangle3 = new Rectangle (CANVAS_WIDTH - 205, 95, 200, 20);
+        Rectangle backRectangle3 = new Rectangle(CANVAS_WIDTH - 205, 95, 200, 20);
         backRectangle3.setFillColor(new Color(105, 200, 10));
         canvas.add(backRectangle3);
         GraphicsText unFlagModText = new GraphicsText("Hold (F) again to Unflag");
@@ -165,49 +162,15 @@ public class MineSweeperGame {
 
                 if (cell.isRevealed) {
                     if (!cell.isMine) {
-                        if (cell.getMineNum() == 0) {
-                        Image img = new Image(x, y, "0.png");
-                        canvas.add(img);
-                        }
-                        if (cell.getMineNum() == 1) {
-                            Image img = new Image(x, y, "1.png");
-                            canvas.add(img);
-                        }
-                        if (cell.getMineNum() == 2) {
-                            Image img = new Image(x, y, "2.png");
-                            canvas.add(img);
-                        }
-                        if (cell.getMineNum() == 3) {
-                            Image img = new Image(x, y, "3.png");
-                            canvas.add(img);
-                        }
-                        if (cell.getMineNum() == 4) {
-                            Image img = new Image(x, y, "4.png");
-                            canvas.add(img);
-                        }
-                        if (cell.getMineNum() == 5) {
-                            Image img = new Image(x, y, "5.png");
-                            canvas.add(img);
-                        }
-                        if (cell.getMineNum() == 6) {
-                            Image img = new Image(x, y, "6.png");
-                            canvas.add(img);
-                        }
-                        if (cell.getMineNum() == 7) {
-                            Image img = new Image(x, y, "7.png");
-                            canvas.add(img);
-                        }
-                        if (cell.getMineNum() == 8) {
-                            Image img = new Image(x, y, "8.png");
-                            canvas.add(img);
-                        }
+                        int n = cell.getMineNum();         
+                        canvas.add(new Image(x, y, n + ".png"));
                     }
                     else {
                         Image img = new Image(x, y, "mine.png");
                         canvas.add(img); 
                     }
                 } else {
-                    if (cell.isFlaged) {
+                    if (cell.isFlagged) {
                         Image img = new Image(x, y, "flag.png");
                         canvas.add(img); 
                     }
@@ -236,7 +199,6 @@ public class MineSweeperGame {
                         gameWonText.setFillColor(Color.GREEN);
                         canvas.add(gameWonText);
                     }
-                    
                 }
             }
         }
@@ -264,47 +226,50 @@ public class MineSweeperGame {
 
     /* Mouse and Key Handlers   ------------------------------------------------------------
      */
+   
     private static void addMouseHandler() {
-
         canvas.onMouseDown(event -> {
             double x = event.getPosition().getX();
             double y = event.getPosition().getY();
 
-            // convert pixels to grid coordinates
-            int row = (int)((x - OX) / IMAGE_SIZE);
-            int col = (int)((y-OY)/ IMAGE_SIZE);
+            int row = (int) ((x - OX) / IMAGE_SIZE);
+            int col = (int) ((y - OY) / IMAGE_SIZE);
 
-            if (!board.inBounds(row, col)) return;
-            if (FLAG_MODE) {
-                if (!board.getCell(row, col).isRevealed) {
+            if (!board.inBounds(row, col)) {
+                return;
+            }
+
+            Cell cell = board.getCell(row, col);
+
+            if (flagMode) {
+                if (!cell.isRevealed) {
                     toggleFlag(row, col);
                 }
-            }
-            else {
-                if (!board.getCell(row, col).isFlaged){
+            } else {
+                if (!cell.isFlagged) {
                     board.revealCell(row, col);
                 }
             }
-            drawBoard();  
+
+            drawBoard();
         });
     }
+
 
     private static boolean addKeyHandler() {
         canvas.onKeyDown(event -> {
             Key key = event.getKey();
-            if (FLAG_MODE == false && key == Key.F) {
-                FLAG_MODE = true;
-                // System.out.println("Flag mode activated");
+            if (flagMode == false && key == Key.F) {
+                flagMode = true;
             }
         });
         canvas.onKeyUp(event -> {
             Key key = event.getKey();
             if (key == Key.F) {
-                FLAG_MODE = false;
-                // System.out.println("Flag mode deactivated");
+                flagMode = false;
             }
         });
-        return FLAG_MODE;
+        return flagMode;
     }
 
 
@@ -330,6 +295,9 @@ public class MineSweeperGame {
             }
         });
     }
-   
+
+    public static void main(String[] args) {
+        new MineSweeperGame();
+    }
 }
 

@@ -1,11 +1,20 @@
 import java.util.Random;
 
+    /**
+     * Constructs a board of the given dimensions and configured mine count.
+     * @param r number of rows (must be > 0)
+     * @param c number of columns (must be > 0)
+     * @param m number of mines to place (should be between 0 and r*c)
+     */
 public class Board {
     Cell[][] grid;
     int row;
     int col;
     int mine;
 
+    /**
+     * Creates a Minesweeper board with given size and number of mines.
+     */
     public Board (int r, int c, int m) {
         col = c;
         row = r;
@@ -13,6 +22,10 @@ public class Board {
         grid = new Cell[row][col];
     }
 
+    /**
+     * Sets up the board for a new game.
+     * Creates all cells, places mines, and calculates nearby mine numbers.
+     */
     public void initialize() {
         createCells();       
         placeMines();        
@@ -27,11 +40,14 @@ public class Board {
         }
     }
 
+    /**
+     * Checks if the given (r, c) position is within the board bounds.
+     */
     public boolean inBounds(int r, int c) {
         return r >= 0 && r < row && c >= 0 && c < col;
     }
 
-    public void placeMines() {
+    private void placeMines() {
         Random rand = new Random();
         int placed = 0;
         while (placed <= mine) {
@@ -44,7 +60,7 @@ public class Board {
         }
     }
 
-    public void mineCalculator() {
+    private void mineCalculator() {
         for (int i = 0; i < row; i ++) {
             for (int j = 0; j < col ; j++) {
                 if (grid[i][j].isMine){
@@ -57,7 +73,7 @@ public class Board {
         }
     }
 
-    public int mineNeighborCalculator(int r, int c) {
+    private int mineNeighborCalculator(int r, int c) {
         int num = 0;
         for (int i = -1; i <= 1; i ++) {
             for (int j = -1; j <= 1 ; j++) {
@@ -69,6 +85,10 @@ public class Board {
         return num;
     }
 
+    /**
+     * Reveals the cell at (r, c).
+     * If the cell has no nearby mines, neighboring cells are revealed automatically.
+     */
     public void revealCell(int r, int c) {
         if (!inBounds(r, c)) {
             return;
@@ -93,6 +113,10 @@ public class Board {
         }
     }
 
+    /**
+     * Checks whether the game is over.
+     * The game ends when a mine is revealed.
+     */
     public boolean isGameOver() {
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < col; j++) {
@@ -105,6 +129,10 @@ public class Board {
         return false;
     }
 
+    /**
+     * Checks whether the player has won the game.
+     * The game is won when all non-mine cells are revealed.
+     */
     public boolean isGameWon() {
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < col; j++) {
@@ -120,6 +148,10 @@ public class Board {
         return true;
     }
 
+    /**
+     * Reveals all mines on the board.
+     * Usually called when the game is over.
+     */
     public void revealAllMines() {
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < col; j++) {
@@ -132,14 +164,23 @@ public class Board {
     }
 
 
+    /**
+     * Returns the number of rows in the board.
+     */
     public int getRow() {
         return row;
     }
 
+    /**
+     * Returns the number of columns in the board.
+     */
     public int getCol() {
         return col;
     }
 
+    /**
+     * Returns the Cell at the specified (r, c) position.
+     */
     public Cell getCell(int r, int c) {
         return grid[r][c];
     }
